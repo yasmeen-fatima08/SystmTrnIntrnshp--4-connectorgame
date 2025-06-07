@@ -1,0 +1,355 @@
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    background: radial-gradient(circle, #120A8F, #080440); /* Deep space blue gradient */
+    color: #00FFFF; /* Vibrant cyan text */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem; /* Slightly reduced padding */
+    opacity: 1;
+    transform: translateY(0);
+    overflow: auto; /* Keep auto for potential overflow */
+    position: relative;
+    margin-bottom: 1rem; /* Further reduced bottom margin */
+}
+
+@keyframes fadeInBody {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.header-info {
+    text-align: center;
+    margin-bottom: 1rem; /* Further reduced */
+    z-index: 10;
+}
+
+h1 {
+    font-size: 2.5rem; /* Further reduced */
+    font-weight: bold;
+    color: #00FFFF;
+    text-shadow: 0 0 10px #FF69B4;
+    margin-bottom: 0.2rem; /* Further reduced */
+    animation: winTextGlitch 0.5s infinite alternate;
+}
+
+@keyframes winTextGlitch {
+    0% { text-shadow: 2px 2px #FF69B4, -2px -2px #00FFFF; }
+    50% { text-shadow: -2px 2px #FF69B4, 2px -2px #00FFFF; }
+    100% { text-shadow: 2px -2px #FF69B4, -2px 2px #00FFFF; }
+}
+
+#player-turn {
+    font-size: 1.3rem; /* Further reduced */
+    color: #00FFFF;
+    margin-bottom: 0.6rem; /* Further reduced */
+}
+
+.score-container {
+    display: flex;
+    gap: 0.8rem; /* Further reduced */
+    margin-bottom: 0.4rem; /* Further reduced */
+    font-size: 0.9rem; /* Further reduced */
+    color: #00FFFF; /* Cyan color to match text */
+    align-items: center;
+}
+
+.player-indicators {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem; /* Further reduced */
+    margin-bottom: 0.6rem; /* Further reduced */
+}
+
+.player-indicator {
+    width: 1.5rem; /* Further reduced */
+    height: 1.5rem; /* Further reduced */
+    border-radius: 50%;
+    box-shadow: 0 0 15px;
+    animation: pulseGlow 1.5s ease-in-out infinite alternate;
+}
+
+#player-indicator-1 {
+    background-color: #32CD32 !important; /* Bright lime green */
+    box-shadow-color: #32CD32 !important;
+}
+
+#player-indicator-2 {
+    background-color: #FF8C00 !important; /* Electric orange */
+    box-shadow-color: #FF8C00 !important;
+}
+
+.player-turn-indicator-1 {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px #32CD32; /* Lime green glow */
+}
+
+.player-turn-indicator-2 {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px #FF8C00; /* Orange glow */
+}
+
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 10px currentColor; }
+    100% { box-shadow: 0 0 20px currentColor; }
+}
+
+.game-board-container {
+    position: relative;
+    aspect-ratio: 7 / 6;
+    width: 75%; /* Reduced from 80% */
+    max-width: 28rem; /* Reduced from 30rem */
+    transform: scale(0.8); /* Further reduced */
+    opacity: 0;
+    animation: scaleFadeIn 0.5s ease-out forwards 0.2s, boardPulse 2s ease-in-out infinite alternate 0.2s; /* Both animations */
+    margin-bottom: 0.8rem; /* Further reduced */
+    z-index: 10;
+}
+
+@keyframes scaleFadeIn {
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes boardPulse {
+    0% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); }
+    100% { box-shadow: 0 0 30px rgba(255, 105, 180, 0.5); }
+}
+
+.board.board-background {
+    background-color: #080440; /* Darker space blue board */
+    border-radius: 1rem;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); /* Cyan shadow */
+    padding: 0.6rem;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 0.6rem;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.cell-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%; /* To make it a square for the hole */
+}
+
+.cell-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+#column-clicks > div:hover + .board > .cell-container > .cell-content {
+    background-color: rgba(0, 255, 255, 0.1); /* Cyan hover highlight */
+    box-shadow: 0 0 15px rgba(255, 105, 180, 0.7); /* Hot pink hover glow */
+}
+
+#column-clicks > div:hover {
+    outline: 2px solid #FF69B4; /* Hot pink hover outline */
+}
+
+.board-hole {
+    background-color: #333;
+    border-radius: 0.25rem;
+    width: 80%;
+    height: 80%;
+}
+
+.piece {
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    position: absolute;
+    box-shadow: 0 0 15px, inset 0 0 10px rgba(255, 255, 255, 0.2); /* Added inner glow */
+}
+
+.player-1 {
+    background-color: #32CD32; /* Bright lime green */
+    box-shadow-color: #32CD32;
+}
+
+.player-2 {
+    background-color: #FF8C00; /* Electric orange */
+    box-shadow-color: #FF8C00;
+}
+
+#column-clicks {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    cursor: pointer;
+}
+
+#column-clicks > div {
+    height: 100%;
+}
+
+#reset-button,
+#reset-scores-button {
+    padding: 0.5rem 1rem !important; /* Further reduced padding */
+    font-size: 0.9rem !important; /* Further reduced font size */
+    background-color: transparent;
+    color: #00FFFF; /* Vibrant cyan button text */
+    border: 2px solid #FF69B4; /* Hot pink border */
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 10px #FF69B4; /* Hot pink shadow */
+    z-index: 30;
+    display: inline-block !important;
+    margin: 0.5rem !important;
+    text-decoration: none !important; /* Prevent underlines on buttons if they were accidentally styled as links */
+}
+
+#reset-button:hover,
+#reset-scores-button:hover {
+    background-color: #FF69B4; /* Hot pink hover background */
+    color: #080440; /* Dark background on hover */
+    box-shadow: 0 0 20px #FF69B4; /* Hot pink hover shadow */
+}
+
+/* Win effect styles */
+.winning-cell .board-hole {
+    outline: 4px solid #FF69B4; /* Add a hot pink outline */
+    outline-offset: -4px; /* To keep it within the cell */
+}
+
+.win-animation {
+    display: inline-block;
+}
+
+.win-animation span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Enhanced exploded pieces style */
+.exploded-piece {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 1;
+    pointer-events: none;
+    background: radial-gradient(circle, currentColor, transparent);
+    animation: explode 1s ease-out forwards, fadeOut 1s ease-out forwards;
+    z-index: 15;
+}
+
+@keyframes explode {
+    0% { transform: scale(1); }
+    100% { transform: translate(var(--dx), var(--dy)) scale(1.5); }
+}
+
+@keyframes fadeOut {
+    to { opacity: 0; }
+}
+
+/* Subtle background animation */
+@keyframes subtleBackgroundShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #00f, #f0f, #0ff, #fff, #0ff, #f0f, #00f);
+    background-size: 600% 600%;
+    animation: subtleBackgroundShift 15s ease-in-out infinite alternate;
+    z-index: 0;
+    opacity: 0.15;
+    pointer-events: none; /* ADD THIS LINE */
+}
+
+#particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1; /* Behind the main content */
+}
+
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(0, 255, 255, 0.2); /* Cyan particles */
+    animation: float 15s linear infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translate(var(--x), var(--y)) scale(var(--scale));
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translate(calc(var(--x) + var(--dx)), calc(var(--y) + var(--dy))) scale(var(--scale));
+        opacity: 0;
+    }
+}
+
+#game-history {
+    margin-top: 1rem; /* Further reduced */
+    color: #00FFFF;
+    text-align: center;
+    z-index: 10;
+    font-size: 0.9rem;
+}
+
+#history-list {
+    list-style-type: none;
+    padding: 0 !important;
+    margin-top: 0.2rem;
+}
+
+#history-list li {
+    margin-bottom: 0.1rem;
+    font-size: 0.8rem;
+    color: #00FFFF !important;
+}
+
+body > div:last-child { /* Buttons container */
+    display: flex !important;
+    gap: 0.5rem; /* Further reduced gap */
+    margin-top: 1rem !important;
+    justify-content: center;
+    width: 100% !important;
+    text-align: center !important;
+}
+
+#reset-button,
+#reset-scores-button {
+    padding: 0.5rem 1rem !important; /* Further reduced padding */
+    font-size: 0.9rem !important; /* Further reduced font size */
+}

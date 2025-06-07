@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura Align</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body > div:last-child {
+            border: 5px solid red !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-container"></div>
+    <div class="header-info">
+        <h1>Aura Align</h1>
+        <div id="player-turn">Player 1's Turn</div>
+        <div id="timer">Time: --</div>
+        <div class="score-container">
+            <div id="player-1-score">Player 1: 0</div>
+            <div class="player-indicators">
+                <div id="player-indicator-1" class="player-indicator"></div>
+                <span>vs</span>
+                <div id="player-indicator-2" class="player-indicator"></div>
+            </div>
+            <div id="player-2-score">Player 2: 0</div>
+        </div>
+    </div>
+
+    <div class="game-board-container">
+        <div class="board board-background">
+            </div>
+        <div id="column-clicks">
+            </div>
+    </div>
+
+    <div id="game-history">
+        <h2>Game History</h2>
+        <ul id="history-list">
+            </ul>
+    </div>
+
+    <div>
+        <button id="reset-button">Play Again</button>
+        <button id="reset-scores-button">Reset Scores</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
